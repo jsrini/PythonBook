@@ -6,38 +6,38 @@ class Node:
     self.edges=[]
     self.visited=False
 
-  def addedge(self,node):
+  def add_edge(self,node):
     if node not in self.edges:
       self.edges.append(node)
 
-  def deleteedge(self,node):
+  def delete_edge(self,node):
     if node in self.edges:
       self.edges.remove(node)
 
-  def isEdge(self,node):
+  def is_edge(self,node):
     return node in self.edges
   
-  def setVisited(self,val):
+  def set_visited(self,val):
     self.visited=val
     
-  def setData(self,data):
+  def set_data(self,data):
     self.data=data
     
-  def printedges(self):
+  def print_edges(self):
     E=[]
     for v in self.edges:
       E.append((self.index,v.index))
     print(E)
 
-  def DepthFirstTraverse(self):
+  def depth_first_traverse(self):
     if self.visited == True:
       return
     self.visited = True
     print(str(self.data))
     for adj in self.edges:
-      adj.DepthFirstTraverse()
+      adj.depth_first_traverse()
       
-  def BreadthFirstTraverse(self, queue):
+  def breadth_first_traverse(self, queue):
     for adj in self.edges:
       if adj.visited==False:
         adj.visited=True
@@ -49,49 +49,52 @@ class Graph:
     for i in range(numvertices):
       self.nodes.append(Node(i))
 
-  def setvertex(self,u,data):
+  def set_node_data(self,u,data):
     if u < len(self.nodes):
       self.nodes[u].data=data
     else:
       print('Incorrect vertex number')
 
-  def addedge(self,u,v):
+  def add_edge(self,u,v):
     if (u<len(self.nodes)) and (v<len(self.nodes)):
-      if(self.nodes[u].isEdge(self.nodes[v])):
+      if self.nodes[u].is_edge(self.nodes[v]) or self.nodes[v].is_edge(self.nodes[u]):
         print('Duplicate edge ('+str(u)+','+str(v)+')')
       else:
-        self.nodes[u].addedge(self.nodes[v])
-        self.nodes[v].addedge(self.nodes[u])
+        self.nodes[u].add_edge(self.nodes[v])
+        self.nodes[v].add_edge(self.nodes[u])
     else:
         print('Incorrect vertex number')
   
-  def deleteedge(self,u,v):
+  def delete_edge(self,u,v):
     if (u<len(self.nodes)) and (v<len(self.nodes)):
-        self.nodes[u].deleteedge(self.nodes[v])
-        self.nodes[v].deleteedge(self.nodes[u])
+        self.nodes[u].delete_edge(self.nodes[v])
+        self.nodes[v].delete_edge(self.nodes[u])
     else:
         print('Incorrect vertex number')
  
-  def getNodeNumber(self,data):
+  def get_node_number(self,data):
+    #this code assumes data is unique
+    #modifying this code to handle non-unique
+    #data is an exercise.
     for i in range(len(self.nodes)):
       if self.nodes[i].data==data:
         return self.nodes[i].index
     return None
 
-  def printGraph(self):
+  def print_graph(self):
     for i in range(len(self.nodes)):
       print('Node number: '+str(i)+' data: '+str(self.nodes[i].data))
-      self.nodes[i].printedges()
+      self.nodes[i].print_edges()
 
-  def DepthFirstTraverse(self):
+  def depth_first_traverse(self):
     if len(self.nodes) > 0:
-      self.nodes[0].DepthFirstTraverse()
+      self.nodes[0].depth_first_traverse()
 
-  def DepthFirstTraverse2(self):
+  def depth_first_traverse2(self):
     for node in self.nodes:
-      node.DepthFirstTraverse()
+      node.depth_first_traverse()
   
-  def BreadthFirstTraverse(self):
+  def breadth_first_traverse(self):
     queue = Queue.Queue()
     for node in self.nodes:
       if node.visited==False:
@@ -100,6 +103,6 @@ class Graph:
         while queue.isEmpty()==False:
           curnode=queue.dequeue()
           print(str(curnode.data))
-          curnode.BreadthFirstTraverse(queue)
+          curnode.breadth_first_traverse(queue)
           
       

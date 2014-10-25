@@ -2,9 +2,9 @@ import graphpriorityqueue
 import WeightedGraph
 
 class NodeData:
-    def __init__(self,vertex,Svertex,weight):
+    def __init__(self,vertex,MSTVertex,weight):
         self.vertex=vertex
-        self.Svertex=Svertex
+        self.MSTVertex=MSTVertex
         self.weight=weight
 
 def prim(G,root):
@@ -18,13 +18,13 @@ def prim(G,root):
         element=graphPQ.delete()
         MST.setvertex(element.vertex,G.getNode(element.vertex).data)
         inMST[element.vertex]=True
-        if element.vertex != element.Svertex:
-            MST.addedge(element.vertex,element.Svertex,element.weight)
+        if element.vertex != element.MSTVertex:
+            MST.addedge(element.vertex,element.MSTVertex,element.weight)
             MSTwt=MSTwt+element.weight
         adjlist=G.getNode(element.vertex).getedges()
-        for Svertex, candidatevertex, wt in adjlist:
+        for MSTVertex, candidatevertex, wt in adjlist:
             if inMST[candidatevertex] == False:
-                newelt=NodeData(candidatevertex, Svertex,wt)
+                newelt=NodeData(candidatevertex, MSTVertex,wt)
                 graphPQ.insert(newelt)
     print('MST weight: '+str(MSTwt))
     return MST

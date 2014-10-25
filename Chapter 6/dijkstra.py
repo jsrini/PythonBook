@@ -24,7 +24,7 @@ def dijkstra(G,s):
         element=GraphPQ.delete()
         SPTree.setvertex(element.vertex,G.getNode(element.vertex).data)
         inSPTree[element.vertex]=True
-        if element.vertex != -1:
+        if element.Svertex != -1:
             SPTree.addedge(element.vertex,element.Svertex,element.weight)
         adjlist=G.getNode(element.vertex).getedges()
         for Svertex, candidatevertex, wt in adjlist:
@@ -38,7 +38,7 @@ def dijkstra(G,s):
     for v in range(G.numnodes()):
         if v==s:
             continue
-        if predecessors[v]==-1 or distances[v]==float('-inf'):
+        if predecessors[v]==-1 or distances[v]==float('inf'):
             print('NO PATH from node '+str(s)+' to node '+str(v))
             continue
         else:

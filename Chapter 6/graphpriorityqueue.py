@@ -10,9 +10,9 @@ class minheap:
             self.vertices[element.vertex]=len(self.list)-1
         self.reorderheap(element)
         
-    def delete(self):
+    def pop(self):
         if len(self.list) == 0:
-          print('No element to delete')
+          print('No element to pop')
           return
       
         retval = self.list[0]
@@ -24,33 +24,31 @@ class minheap:
         
         loc=0     
         done=False
-        while done==False:
+        while done is False:
           lc=2*loc+1
           rc=2*loc+2
-          maxindex = loc
+          minindex = loc
           self.list[loc]=lastelt
           self.vertices[lastelt.vertex]=loc
           if lc < len(self.list):
             if self.list[lc].weight < lastelt.weight:
-              maxindex=lc
+              minindex=lc
           if rc < len(self.list):
-            if self.list[rc].weight < self.list[maxindex].weight:
-              maxindex=rc
-          if maxindex != loc:
-            self.list[loc]=self.list[maxindex]
+            if self.list[rc].weight < self.list[minindex].weight:
+              minindex=rc
+          if minindex != loc:
+            self.list[loc]=self.list[minindex]
             self.vertices[self.list[loc].vertex]=loc
-            loc = maxindex
+            loc = minindex
           else:
             return retval
 
     def reorderheap(self,element):
         loc = self.vertices[element.vertex]
-
         if self.list[loc].weight < element.weight:
             #no need to insert, current element has greater priority
             return
-        done=False
-        while done==False:
+        while True:
           if loc==0:
             self.list[loc]=element
             self.vertices[element.vertex]=loc
