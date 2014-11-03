@@ -5,7 +5,7 @@ def prngbench(prngobj):
     bins = 50
 
     # Avg num points per bin
-    ppbin = 10
+    ppbin = 1000
 
     # Num calls to rand()
     iterations = ppbin * bins

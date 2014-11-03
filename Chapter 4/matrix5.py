@@ -30,9 +30,13 @@ class matrix():
         self.list[index[0]][index[1]] = value
 
     def rows(self):
+        if self.tp:
+            return len(self.list[0])
         return len(self.list)
 
     def cols(self):
+        if self.tp:
+            return len(self.list)
         return len(self.list[0])
 
     def __str__(self):
