@@ -1,30 +1,24 @@
 def DnC_convexhull(points, srted=False):
+    #sort the entire list only once
     if srted==False:
         points.sort()
 
-    print('DnC_convexhull: got points ' + str(points))
-    
+    #end-recursion if num points <=3    
     if ((len(points)<=3) and (len(points)>0)):
         return clockwise(points)
     elif (len(points)==0):
         input('Error: empty points')
         return []
-    
+
+    #divide
     left = len(points)//2
-    #print('left='+str(left))
-    #input('Enter val: ')
-    
-    print('about to recurse on left side'+str(points[0:left]))
     lefthull = DnC_convexhull(points[0:left],True)
-    print('got lefthull: '+str(lefthull))
-
-    print('about to recurse on right side'+str(points[left:]))
     righthull = DnC_convexhull(points[left:],True)
-    print('got righthull: '+str(righthull))
 
-    print('going to merge')
+    #merge
     return merge(lefthull,righthull)
 
+#return clockwise ordering of points with respect to point with smallest x
 def clockwise(points):
     if len(points)==1:
         return points
@@ -38,7 +32,7 @@ def clockwise(points):
         return [points[minx],points[(minx+1)%2]]
 
     #points = 3
-    islft=isLeft(points[minx],points[(minx+1)%3],points[(minx+2)%3])
+    islft=is_left(points[minx],points[(minx+1)%3],points[(minx+2)%3])
     if  islft > 0:
         pts=[points[minx],points[(minx+2)%3],points[(minx+1)%3]]
     elif islft < 0:
@@ -50,16 +44,18 @@ def clockwise(points):
     return pts
 
 
-def isLeft(a,b,c):
+def is_left(a,b,c):
     return (c[1]-a[1])*(b[0]-a[0]) - (b[1]-a[1])*(c[0]-a[0])
 
-def getdirlara(a,b,la,ra):
-    dirla =  isLeft(a,b,la)  
-    dirra =  isLeft(a,b,ra)
+#get directions of point to left of a (la) and point to right of a (ra)
+def get_dir_la_ra(a,b,la,ra):
+    dirla =  is_left(a,b,la)  
+    dirra =  is_left(a,b,ra)
     return (dirla, dirra)
 
-def checklefttangent(a,b, la, ra):
-    dirla, dirra = getdirlara(a,b,la,ra)
+#check if a-b is a left tangent. la and ra are points to left and right of a
+def check_left_tangent(a,b, la, ra):
+    dirla, dirra = get_dir_la_ra(a,b,la,ra)
     if (dirra==0) and (dirla==0):
         input('degenerate left tangent: a: '+str(a)+' b: '+str(b)+' la: '+str(la)+' ra: '+str(ra))
         
@@ -68,9 +64,9 @@ def checklefttangent(a,b, la, ra):
     else:
         return False
 
-
-def checkrighttangent(a,b,la,ra):
-    dirla, dirra = getdirlara(a,b,la,ra)
+#check if a-b is a right tangent. la and ra are points to left and right of a
+def check_right_tangent(a,b,la,ra):
+    dirla, dirra = get_dir_la_ra(a,b,la,ra)
     if (dirra==0) and (dirla==0):
         input('degenerate rightangent: a: '+str(a)+' b: '+str(b)+' la: '+str(la)+' ra: '+str(ra))
         
@@ -79,8 +75,8 @@ def checkrighttangent(a,b,la,ra):
     else:
         return False
 
-def getlowertangent(lefthull, righthull,a,b):
-    #lower tangent
+#given the left hull and right hull, find the lower tangent to connect the two hulls
+def get_lower_tangent(lefthull, righthull,a,b):
     la = (a-1)%len(lefthull)
     ra = (a+1)%len(lefthull)
     lb = (b-1)%len(righthull)
@@ -89,28 +85,28 @@ def getlowertangent(lefthull, righthull,a,b):
     istangent=False
     while istangent==False:
         count=0
-        while checklefttangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra])== False:
+        while check_left_tangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra])== False:
             a=(a+1) % len(lefthull)
             la = (a-1)%len(lefthull)
             ra = (a+1)%len(lefthull)
             count=count+1
             if count==len(lefthull):
-                print('getlowertangent: Infinite loop in left hull')
+                print('get_lower_tangent: Infinite loop in left hull')
     
         count=0
-        while checklefttangent(lefthull[a],righthull[b],righthull[lb],righthull[rb])== False:
+        while check_left_tangent(lefthull[a],righthull[b],righthull[lb],righthull[rb])== False:
             b=(b-1) % len(righthull)
             lb = (b-1)%len(righthull)
             rb = (b+1)%len(righthull)
             count=count+1
             if count==len(righthull):
-                print('getlowertangent: Infinite loop in right hull')
+                print('get_lower_tangent: Infinite loop in right hull')
         
-        if checklefttangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra]):
+        if check_left_tangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra]):
             return [a,b]
 
-def getuppertangent(lefthull, righthull,a,b):
-    #lower tangent
+#given the left hull and right hull, find the upper tangent to connect the two hulls
+def get_upper_tangent(lefthull, righthull,a,b):
     la = (a-1)%len(lefthull)
     ra = (a+1)%len(lefthull)
     lb = (b-1)%len(righthull)
@@ -119,16 +115,16 @@ def getuppertangent(lefthull, righthull,a,b):
     istangent=False
     while istangent==False:
         count=0
-        while checkrighttangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra])== False:
+        while check_right_tangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra])== False:
             a=(a-1) % len(lefthull)
             la = (a-1)%len(lefthull)
             ra = (a+1)%len(lefthull)
             count=count+1
             if count==len(lefthull):
-                print('getuppertangent: Infinite loop in left hull')
+                print('get_upper_tangent: Infinite loop in left hull')
 
         count=0        
-        while checkrighttangent(lefthull[a],righthull[b],righthull[lb],righthull[rb])== False:
+        while check_right_tangent(lefthull[a],righthull[b],righthull[lb],righthull[rb])== False:
             b=(b+1) % len(righthull)
             lb = (b-1)%len(righthull)
             rb = (b+1)%len(righthull)
@@ -136,91 +132,95 @@ def getuppertangent(lefthull, righthull,a,b):
             if count==len(righthull):
                 print('get uppertangent: Infinite loop in right hull')
         
-        if checkrighttangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra]):
+        if check_right_tangent(lefthull[a],righthull[b],lefthull[la],lefthull[ra]):
             return [a,b]
 
-           
+def is_collinear (a,b,c):
+    return is_left(a,b,c)==0
+
+def find_leftright_most_points(hull):
+    minindex=0
+    maxindex=0
+    for i in range(len(hull)):
+        if hull[i][0] < hull[minindex][0]:
+            minindex = i
+        if hull[i][0] > hull[maxindex][0]:
+            maxindex = i
+    return (minindex, maxindex)
+
+
+#merge algorithm
+#starting from la, clockwise to ua, then add ub, work clockwise until lb
+#deal with special cases (2 points, collinearity, etc.)
 def merge(lefthull,righthull):
-    print('merge: got lefthull: '+str(lefthull))
-    print('merge: got righthull: '+str(righthull))
 
     if len(lefthull) == 2 and len(righthull) == 2:
+        #merging two lines to form convex hull
         lefthull.sort(key= lambda x: (x[1],x[0]))
         righthull.sort(key= lambda x: (x[1],x[0]))
 
-        print('merge: before getting lower tangent of two lines')
-        la, lb =getlowertangent(lefthull,righthull,0,0)
-        print('merge: after lower tangent. la: '+str(lefthull[la])+' lb: '+str(righthull[lb]))
-        ua, ub = getuppertangent(lefthull,righthull,1,1)
-        print('merge: after upper tangent. ua: '+str(lefthull[ua])+' ub: '+str(righthull[ub]))
+        la, lb =get_lower_tangent(lefthull,righthull,0,0)
+        ua, ub = get_upper_tangent(lefthull,righthull,1,1)
     else:
         #assume lefthull and righthull are in clockwise order
-        leftmin=0
-        leftmax=0
-        for i in range(len(lefthull)):
-            if lefthull[i][0] < lefthull[leftmin][0]:
-                leftmin = i
-            if lefthull[i][0] > lefthull[leftmax][0]:
-                leftmax = i
+        leftmin, leftmax = find_leftright_most_points(lefthull)
 
-        rightmin=0
-        rightmax=0
-        for i in range(len(righthull)):
-            if righthull[i][0] < righthull[rightmin][0]:
-                rightmin = i
-            if righthull[i][0] > righthull[rightmax][0]:
-                rightmax = i
+        rightmin, rightmax= find_leftright_most_points(righthull)
 
         a=leftmax
         b=rightmin
-
-        print('leftmin: '+str(lefthull[leftmin])+' leftmax: '+str(lefthull[leftmax])+' rightmin: '+str(righthull[rightmin])+' rightmax: '+str(righthull[rightmax]))
-        print('merge: before getting lower tangent')
-        la, lb =getlowertangent(lefthull,righthull,a,b)
-        print('merge: after lower tangent. la: '+str(lefthull[la])+' lb: '+str(righthull[lb]))
-        ua, ub = getuppertangent(lefthull,righthull,a,b)
-        print('merge: after upper tangent. ua: '+str(lefthull[ua])+' ub: '+str(righthull[ub]))
-
+       
+        la, lb = get_lower_tangent(lefthull,righthull,a,b)   
+        ua, ub = get_upper_tangent(lefthull,righthull,a,b)
+        
+    #now that we got the tangents, construct the hull
     maxpts = len(lefthull)+len(righthull)
     convexhull = []
-    
+
+    #start from la, work clockwise until you reach ua
     i=la
     while i!=ua:
+        #if we find collinear points discard middle collinear point in sequence
         if len(convexhull)>2 :
-            if isLeft(convexhull[-2],convexhull[-1],lefthull[i])==0:
+            if is_collinear(convexhull[-2],convexhull[-1],lefthull[i]):
                 convexhull[-1]=lefthull[i]
             else:    
                 convexhull.append(lefthull[i])
         else:
             convexhull.append(lefthull[i])
         i=(i+1)%len(lefthull)
+
+    #now add ua to the list
     if len(convexhull)>2:
-            if isLeft(convexhull[-2],convexhull[-1],lefthull[ua])==0:
+            if is_collinear(convexhull[-2],convexhull[-1],lefthull[ua]):
                 convexhull[-1]=lefthull[ua]
             else:    
                 convexhull.append(lefthull[ua])
     else:
         convexhull.append(lefthull[ua])
 
+    #now starting from ub, work clockwise until you reach lb
     i=ub
     while i!=lb:
         if len(convexhull)>2 :
-            if isLeft(convexhull[-2],convexhull[-1],righthull[i])==0:
+            if is_collinear(convexhull[-2],convexhull[-1],righthull[i]):
                 convexhull[-1]=righthull[i]
             else:    
                 convexhull.append(righthull[i])
         else:
             convexhull.append(righthull[i])
         i=(i+1)%len(righthull)
+
+    #add lb
     if len(convexhull)>2:
-            if isLeft(convexhull[-2],convexhull[-1],righthull[lb])==0:
+            if is_collinear(convexhull[-2],convexhull[-1],righthull[lb]):
                 convexhull[i]=righthull[lb]
             else:    
                 convexhull.append(righthull[lb])
     else:
         convexhull.append(righthull[lb])
-    
-    print('merge.  constructed convex hull.  '+str(convexhull))
+
+    #convex hull is ready
     return convexhull
         
         
