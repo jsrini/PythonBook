@@ -1,4 +1,5 @@
 import random
+import math
 
 class Deck(object):
 
@@ -7,7 +8,7 @@ class Deck(object):
 
     def reset(self):
         # 13 cards in each of 4 suits
-        self.PDF = [4]*13
+        self.hist = [4]*13
         self.num_cards = 52
 
     def cards_left(self):
@@ -20,26 +21,32 @@ class Deck(object):
             return
         
         # calculate CDF by summing
-        # over all bins of the PDF
+        # over all bins of the hist
         # from bin 0 to bin i
         CDF = [0]*13
-        for i in range(len(self.PDF)):
+        for i in range(len(self.hist)):
             for j in range(i+1):
-                CDF[i] = CDF[i] + self.PDF[j]
+                CDF[i] = CDF[i] + self.hist[j]
 
         card = 0
 
         # generate random number and
         # sample inverse CDF
-        cum_prob = random.randint(1,self.num_cards)
+        cum_prob = random.random()
+
+        # scale to num cards
+        cum_prob *= self.num_cards
+        cum_prob = math.ceil(cum_prob)
         
         # lookup corresponding index
         for card in range(len(CDF)):
             if CDF[card] >= cum_prob:
                 break               
 
-        # update the PDF for next time
-        self.PDF[card] -= 1
+        # update the historgram
+        # we don’t need to update CDF here, it will
+        # be done next time we call drawcard()
+        self.hist[card] -= 1
         self.num_cards -= 1
 
         return card
