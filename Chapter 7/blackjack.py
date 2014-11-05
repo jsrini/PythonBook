@@ -78,7 +78,7 @@ def blackjack():
     return (calc_hand_val(player) >
            calc_hand_val(dealer))
 
-def blackjack_win_odds(N):
+def blackjack_win_prob(N):
     wins = 0
     
     for i in range(N):
