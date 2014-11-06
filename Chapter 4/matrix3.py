@@ -1,9 +1,8 @@
 import copy
 
-class matrix():
+class Matrix(object):
     
     def __init__(self,X):
-
         if not isinstance(X,list):
             raise TypeError('Matrices require a list of lists')
 
@@ -31,14 +30,14 @@ class matrix():
         return len(self.list[0])
 
     def __str__(self):
-        stringRep = "";
+        string_rep = "";
         for i in range(self.rows()):
-            stringRep += "[ "
+            string_rep += "[ "
             for j in range(self.cols()):
-                stringRep += str(self[i,j]) + ' '
-            stringRep += "]\n"               
+                string_rep += str(self[i,j]) + ' '
+            string_rep += "]\n"               
 
-        return stringRep    
+        return string_rep    
 
     def __add__(self,X):
         if self.rows() != X.rows():
@@ -53,8 +52,7 @@ class matrix():
                 result[i,j] = result[i,j] + X[i,j]
 
         return result
-                
-
+    
     def __sub__(self,X):
         if self.rows() != X.rows():
             raise TypeError('Dimension (row) mismatch')
@@ -70,23 +68,23 @@ class matrix():
         return result
 
     def gq(self,t,l):
-        result = matrix([[0]*(self.rows()//2) for i in range(self.rows()//2)])
-        t*=self.rows()//2
-        l*=self.cols()//2
+        result = matrix([[0] * (self.rows()//2) for i in range(self.rows()//2)])
+        t *= self.rows() // 2
+        l *= self.cols() // 2
 
         for i in range(result.rows()):
             for j in range(result.cols()):
-                result[i,j]=self[t+i,l+j]
+                result[i,j] = self[t+i,l+j]
 
         return result
 
     def sq(self,t,l,X):
-        t*=self.rows()//2
-        l*=self.cols()//2
+        t *= self.rows() // 2
+        l *= self.cols() // 2
 
         for i in range(X.rows()):
             for j in range(X.cols()):
-                self[t+i,l+j]=X[i,j]
+                self[t+i,l+j] = X[i,j]
     
     def strassen(self,Bs,Cs):
         M1 = (self.gq(0,0) + self.gq(1,1))*(Bs.gq(0,0) + Bs.gq(1,1))
@@ -104,15 +102,14 @@ class matrix():
 
         return Cs
 
-    def naivemul(self,X):
-        result = matrix([[0]*X.cols() for i in range(self.rows())])
+    def naive_mul(self,X):
+        result = matrix([[0] * X.cols() for i in range(self.rows())])
 
         for i in range(self.rows()):
             for j in range(X.cols()):
                 sum = 0
                 for k in range(self.cols()):
-                    sum+=self[i,k]*X[k,j]
-
+                    sum += self[i,k] * X[k,j]
                 result[i,j] = sum
         return result
 
@@ -123,19 +120,19 @@ class matrix():
             
             for i in range(self.rows()):
                 for j in range(self.cols()):
-                    result[i,j] = self[i,j]*X
+                    result[i,j] = self[i,j] * X
             return result
         
         if self.cols() != X.rows():
             raise TypeError('Dimension mismatch')
 
-        result = matrix([[0]*X.rows() for i in range(self.rows())])
+        result = matrix([[0] * X.rows() for i in range(self.rows())])
 
         # For the case of a 1 x 1 matrix
         if self.rows() <= 1 and self.cols() <= 1:
             if X.rows() <= 1 and X.cols() <= 1:
-                result[0,0] = self[0,0]*X[0,0]
-                result = self.naivemul(X)
+                result[0,0] = self[0,0] * X[0,0]
+                result = self.naive_mul(X)
                 return result
 
         return self.strassen(X,result)

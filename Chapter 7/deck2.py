@@ -21,4 +21,4 @@ class Deck(object):
         
         self.num_cards -= 1
 
-        return self.hist[self.num_cards-1]%13
+        return self.hist[self.num_cards-1] % 13

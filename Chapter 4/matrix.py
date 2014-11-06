@@ -1,9 +1,8 @@
 import copy
 
-class matrix():
+class Matrix(object):
     
     def __init__(self,X):
-
         if not isinstance(X,list):
             raise TypeError('Matrices require a list of lists')
 
@@ -31,14 +30,14 @@ class matrix():
         return len(self.list[0])
 
     def __str__(self):
-        stringRep = "";
+        string_rep = "";
         for i in range(self.rows()):
-            stringRep += "[ "
+            string_rep += "[ "
             for j in range(self.cols()):
-                stringRep += str(self[i,j]) + ' '
-            stringRep += "]\n"               
+                string_rep += str(self[i,j]) + ' '
+            string_rep += "]\n"
 
-        return stringRep    
+        return string_rep
 
     def __add__(self,X):
         if self.rows() != X.rows():

@@ -1,57 +1,59 @@
-import Queue
+import queue
 class Node:
     def __init__(self,key,parent=None):
-        self.key=key
-        self.data=None
+        self.key = key
+        self.data = None
         self.parent = parent
-        self.lchild=None
-        self.rchild=None
+        self.lchild = None
+        self.rchild = None
 
-    def addLChild(self, node):
-        self.lchild=node
+    def add_lchild(self,node):
+        self.lchild = node
         node.parent = self
 
-    def addRChild(self,node):
-        self.rchild=node
-        node.parent=self
+    def add_rchild(self,node):
+        self.rchild = node
+        node.parent = self
 
-    def hasLChild(self):
+    def has_lchild(self):
         return self.lchild != None
 
-    def hasRChild(self):
-        return self.rchild!=None
+    def has_rchild(self):
+        return self.rchild != None
 
-    def isLeaf(self):
-        return (self.lchild==None) and (self.rchild==None)
+    def is_leaf(self):
+        return (self.lchild == None) and
+               (self.rchild == None)
 
-    def preorder(self):
-      print(self.key)
-      if self.hasLChild():
-        self.lchild.preorder()
-      if self.hasRChild():
-        self.rchild.preorder()
+    def pre_order(self):
+        print(self.key)
+        if self.has_lchild():
+            self.lchild.pre_order()
+        if self.has_rchild():
+            self.rchild.pre_order()
 
-    def inorder(self):
-      if self.hasLChild():
-        self.lchild.inorder()
-      print(self.key)
-      if self.hasRChild():
-        self.rchild.inorder()
+    def in_order(self):
+        if self.has_lchild():
+            self.lchild.in_order()
+        print(self.key)
+        if self.has_rchild():
+            self.rchild.in_order()
         
-    def postorder(self):
-      if self.hasLChild():
-        self.lchild.postorder()
-      if self.hasRChild():
-        self.rchild.postorder()
-      print(self.key)
+    def post_order(self):
+        if self.has_lchild():
+            self.lchild.post_order()
+        if self.has_rchild():
+            self.rchild.post_order()
+        print(self.key)
 
-    def breadthfirst(self):
-      queue = Queue.Queue(self)
-      while queue.isEmpty()==False:
-        node=queue.dequeue()
-        print(str(node.key))
-        if node.hasLChild():
-          queue.enqueue(node.lchild)
-        if node.hasRChild():
-          queue.enqueue(node.rchild)
+    def breadth_first(self):
+        queue = Queue.Queue(self)
+        
+        while queue.isEmpty() == False:
+            node=queue.dequeue()
+            print(str(node.key))
+            if node.has_lchild():
+                queue.enqueue(node.lchild)
+            if node.has_rchild():
+                queue.enqueue(node.rchild)
       

@@ -2,8 +2,8 @@ import random
 import math
 
 def calculate_pi(N):
-    totalcount = 0
-    circlecount = 0
+    total_count = 0
+    circle_count = 0
 
     for i in range(N):
         x = random.random()
@@ -12,9 +12,9 @@ def calculate_pi(N):
         r = math.sqrt(x**2 + y**2)
 
         if r <= 1:
-            circlecount += 1
-        totalcount += 1
+            circle_count += 1
+        total_count += 1
 
-    return circlecount / totalcount * 4
+    return circle_count / total_count * 4
 
         

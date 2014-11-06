@@ -1,21 +1,21 @@
-FibonacciList = [0,1]
+fibonacci_list = [0,1]
 
-def Fibonacci(n):
+def fibonacci(n):
 
     if n <= 1:
         return n
     else:
         try:
-            a = FibonacciList[n-2]
+            a = fibonacci_list[n-2]
         except:
-            a = Fibonacci(n-2)
-            FibonacciList.append(a)
+            a = fibonacci(n-2)
+            fibonacci_list.append(a)
 
         try:
-            b = FibonacciList[n-1]
+            b = fibonacci_list[n-1]
         except:
-            b = Fibonacci(n-1)
-            FibonacciList.append(b)
+            b = fibonacci(n-1)
+            fibonacci_list.append(b)
 
         return a + b
 

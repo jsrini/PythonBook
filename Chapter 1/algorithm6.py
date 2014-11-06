@@ -1,4 +1,4 @@
-def mergesort(list):
+def merge_sort(list):
     N = len(list)
     
     # Base case
@@ -24,11 +24,11 @@ def mergesort(list):
     while i1 < len(L1) and i2 < len(L2):
         if L1[i1] < L2[i2]:        
             list[count] = L1[i1]
-            i1+=1
+            i1 += 1
         else:
             list[count] = L2[i2]
-            i2+=1
-        count+=1
+            i2 += 1
+        count += 1
 
     # Place remaining elements in
     # merged list
@@ -41,5 +41,5 @@ def mergesort(list):
 
     for i in range(irem,len(remainder)):
         list[count] = remainder[i]
-        count+=1
+        count += 1
     

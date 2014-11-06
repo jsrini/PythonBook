@@ -1,50 +1,50 @@
-import WeightedGraph
+import weightedgraph
 
 
-def initializeSet(n):
-  parent =[0]*n
-  for i in range(n):
-    parent[i]=-1
-  return parent
+def initialize_set(n):
+    parent =[0] * n
+    for i in range(n):
+        parent[i] = -1
+    return parent
 
-def findRoot(S,n):
-  root=n
-  while S[root] >0:
-    root = S[root]
+def find_root(S,n):
+    root = n
+    while S[root] > 0:
+        root = S[root]
     #print('root: '+str(root)+' S['+str(root)+']: '+str(S[root]))
-  if(S[n]>0):
-    S[n]=root
-  return root
+    if(S[n]>0):
+        S[n] = root
+    return root
 
 def union(S,root1,root2):
-  if S[root1] < S[root2]:
-    S[root2] = root1
-  elif S[root2] < S[root1]:
-    S[root1] = root2
-  else:
-    S[root1]=root2
-    S[root2]=S[root2]-1
+    if S[root1] < S[root2]:
+        S[root2] = root1
+    elif S[root2] < S[root1]:
+        S[root1] = root2
+    else:
+        S[root1] = root2
+        S[root2] = S[root2]-1
     
 
-def Kruskal(G):
-  setroots=initializeSet(G.numnodes())
-  MST=WeightedGraph.Graph(G.numnodes())
-  for i in range(G.numnodes()):
-    MST.setvertex(i,G.getNode(i).data)
-  E=G.sortEdges()
-  MSTwt=0
-  for i in range(len(E)):
-    u, v, w = E[i]
-    rootu=findRoot(setroots,u)
-    rootv=findRoot(setroots,v)
-    #print('root[u:'+str(u)+']: '+str(rootu)+' root[v:'+str(v)+']: '+str(rootv))
-    if rootu != rootv:
-      union(setroots,rootu,rootv)
-      print('Adding edge: '+ str((u,v,w)))
-      MST.addedge(u,v,w)
-      MSTwt = MSTwt+w
-  print('MST weight: '+str(MSTwt))
-  return MST
+def kruskal(G):
+    set_roots = initialize_set(G.numnodes())
+    MST = weightedgraph.Graph(G.numnodes())
+    for i in range(G.numnodes()):
+        MST.set_vertex(i,G.get_node(i).data)
+    E = G.sort_edges()
+    MSTwt = 0
+    for i in range(len(E)):
+        u, v, w = E[i]
+        rootu = find_root(set_roots,u)
+        rootv = find_root(set_roots,v)
+        #print('root[u:'+str(u)+']: '+str(rootu)+' root[v:'+str(v)+']: '+str(rootv))
+        if rootu != rootv:
+            union(set_roots,rootu,rootv)
+            print('Adding edge: ' + str((u,v,w)))
+            MST.add_edge(u,v,w)
+            MSTwt = MSTwt+w
+    print('MST weight: ' + str(MSTwt))
+    return MST
 
 
   

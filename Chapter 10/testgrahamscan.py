@@ -2,19 +2,19 @@ import grahamscan
 import random
 import sys
 
-def randompoints(numpoints,length):
-    points=[]
+def random_points(numpoints,length):
+    points = []
     for i in range(numpoints):
-        randx=random.random()*length
-        randy=random.random()*length
+        randx = random.random()*length
+        randy = random.random()*length
         if (randx,randy) not in points:
             points.append((randx,randy))
     return points
 
-points=randompoints(int(sys.argv[1]),100)
-hull=grahamscan.grahamscan(points)
+points = random_points(int(sys.argv[1]),100)
+hull = grahamscan.grahamscan(points)
 
-fp=open(sys.argv[2],'w')
+fp = open(sys.argv[2],'w')
 for i in range(len(hull)):
     fp.write(str(hull[i][0])+','+str(hull[i][1])+'\n')
 fp.write('\n')

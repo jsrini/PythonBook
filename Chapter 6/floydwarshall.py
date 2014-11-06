@@ -1,19 +1,21 @@
-import WeightedGraph
+import weightedgraph
 
-def floydwarshall(G):
-    distances = [[float('inf') for i in range(G.numnodes())] for j in range(G.numnodes())]
+def floyd_warshall(G):
+    distances = [[float('inf') for i in range(G.numnodes())]
+                 for j in range(G.numnodes())]
     
     for i in range(G.numnodes()):
         distances[i][i]=0
-    predecessors = [[-1 for i in range(G.numnodes())] for j in range(G.numnodes())]
+    predecessors = [[-1 for i in range(G.numnodes())]
+                    for j in range(G.numnodes())]
     
-    E=[]
+    E = []
     for v in range(G.numnodes()):
         E.extend(G.getNode(v).getedges())
 
     for u, v, w in E:
-        predecessors[u][v]=u
-        distances[u][v]=w
+        predecessors[u][v] = u
+        distances[u][v] = w
     
     for k in range(G.numnodes()):
         for i in range(G.numnodes()):
@@ -25,27 +27,35 @@ def floydwarshall(G):
 
     for v in range(G.numnodes()):
         for u in range(G.numnodes()):
-            if v==u:
-                if predecessors[u][v]!=-1:
-                    print('There is a negative cycle in the graph that includes vertex '+str(u))
+            if v == u:
+                if predecessors[u][v] != -1:
+                    print('There is a negative cycle in '
+                          'the graph that includes vertex '+str(u))
                 continue
-            if predecessors[u][u]!=-1:
-                print('There is a negative cycle in the path from '+str(u)+' to '+str(v))
+            if predecessors[u][u] != -1:
+                print('There is a negative cycle in '
+                      'the path from '+ str(u) +
+                      ' to ' + str(v))
                 continue
-            elif distances[u][v]==float('inf'):
-                print('NO PATH from node '+str(u)+' to node '+str(v))
+            elif distances[u][v] == float('inf'):
+                print('NO PATH from node '+str(u) +
+                      ' to node '+ str(v))
                 continue
             else:
-                print('Shortest path (cost = '+str(distances[u][v])+') from node '+str(u)+' to node '+str(v)+': ')
+                print('Shortest path (cost = '+
+                      str(distances[u][v]) +
+                      ') from node '+ str(u) +
+                      ' to node '+ str(v)+': ')
             stack = [v]
-            done=False
+            done = False
             currentnode = v
+
             while not done:
                 currentnode=predecessors[u][currentnode]
                 if currentnode != -1:
                     stack.append(currentnode)
                 else:
-                    done=True
+                    done = True
             stack.reverse()
             print(stack)
 

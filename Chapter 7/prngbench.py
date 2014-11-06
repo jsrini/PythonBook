@@ -1,19 +1,19 @@
 import matplotlib.pyplot as pyplot
 
-def prngbench(prngobj):
+def benchmark_prng(prng_obj):
     # Num bins in histogram
     bins = 50
 
     # Avg num points per bin
-    ppbin = 10
+    points_per_bin = 10
 
     # Num calls to rand()
-    iterations = ppbin * bins
+    iterations = points_per_bin * bins
     
     data = [0]*iterations
     
     for i in range(iterations):
-         data[i] = prngobj.random()
+        data[i] = prng_obj.random()
 
     # Generate histogram
     pyplot.hist(data,bins)

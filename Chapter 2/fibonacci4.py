@@ -1,13 +1,12 @@
-FibonacciList = [0, 1]
+fibonacci_list = [0, 1]
 
-def Fibonacci(n):
+def fibonacci(n):
     Fn = 0  # F(n)
 
-    start = len(FibonacciList)
+    start = len(fibonacci_list)
 
     for i in range(start,n+1):
-        Fn = FibonacciList[i-1] + FibonacciList[i-2]
-        FibonacciList.append(Fn)
-         
+        Fn = fibonacci_list[i-1] + fibonacci_list[i-2]
+        fibonacci_list.append(Fn)
 
     return FibonacciList[n]

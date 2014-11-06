@@ -1,9 +1,8 @@
 import copy
 
-class matrix():
+class Matrix(object):
     
     def __init__(self,X):
-
         if not isinstance(X,list):
             raise TypeError('Matrices require a list of lists')
 
@@ -31,14 +30,14 @@ class matrix():
         return len(self.list[0])
 
     def __str__(self):
-        stringRep = "";
+        string_rep = "";
         for i in range(self.rows()):
-            stringRep += "[ "
+            string_rep += "[ "
             for j in range(self.cols()):
-                stringRep += str(self[i,j]) + ' '
-            stringRep += "]\n"               
+                string_rep += str(self[i,j]) + ' '
+            string_rep += "]\n"               
 
-        return stringRep    
+        return string_rep    
 
     def __add__(self,X):
         if self.rows() != X.rows():
@@ -53,8 +52,7 @@ class matrix():
                 result[i,j] = result[i,j] + X[i,j]
 
         return result
-                
-
+    
     def __sub__(self,X):
         if self.rows() != X.rows():
             raise TypeError('Dimension (row) mismatch')
@@ -76,23 +74,22 @@ class matrix():
             
             for i in range(self.rows()):
                 for j in range(self.cols()):
-                    result[i,j] = self[i,j]*X
+                    result[i,j] = self[i,j] * X
             return result
         
         if self.cols() != X.rows():
             raise TypeError('Dimension mismatch')
 
-        return self.naivemul(X)
+        return self.naive_mul(X)
 
-    def naivemul(self,X):
-        result = matrix([[0]*X.cols() for i in range(self.rows())])
+    def naive_mul(self,X):
+        result = matrix([[0] * X.cols() for i in range(self.rows())])
 
         for i in range(self.rows()):
             for j in range(X.cols()):
                 sum = 0
                 for k in range(self.cols()):
-                    sum+=self[i,k]*X[k,j]
-
+                    sum+=self[i,k] * X[k,j]
                 result[i,j] = sum
         return result
                     

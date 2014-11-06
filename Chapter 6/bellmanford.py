@@ -1,10 +1,10 @@
-import WeightedGraph
+import weightedgraph
 
-def bellmanford(G,s):
+def bellman_ford(G,s):
     distances = [float('inf')]*G.numnodes()
-    distances[s]=0
+    distances[s] = 0
     predecessors = [-1]*G.numnodes()
-    E=[]
+    E = []
     for v in range(G.numnodes()):
         E.extend(G.getNode(v).getedges())
     
@@ -20,22 +20,24 @@ def bellmanford(G,s):
     for v in range(G.numnodes()):
         if v==s:
             continue
-        if predecessors[v]==-1 or distances[v]==float('-inf'):
-            print('NO PATH from node '+str(s)+' to node '+str(v))
+        if predecessors[v] == -1 or
+           distances[v] == float('-inf'):
+            print('NO PATH from node '+ str(s) +
+                  ' to node '+str(v))
             continue
         else:
-            print('Shortest path (cost = '+str(distances[v])+') from node '+str(s)+' to node '+str(v)+': ')
+            print('Shortest path (cost = '+
+                  str(distances[v]) +
+                  ') from node '+ str(s)+
+                  ' to node '+str(v)+': ')
         stack = [v]
-        done=False
+        done = False
         currentnode = v
         while not done:
-            currentnode=predecessors[currentnode]
+            currentnode = predecessors[currentnode]
             if currentnode != -1:
                 stack.append(currentnode)
             else:
-                done=True
+                done = True
         stack.reverse()
         print(stack)
-
-        
-            

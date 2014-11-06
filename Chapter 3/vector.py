@@ -5,7 +5,7 @@ class vector(tuple):
   def __add__(self,X):
     if len(self) != len(X):
       raise TypeError ('Dimension mismatch')
-    result=[]
+    result = []
     for i in range(len(self)):
       result.append(self[i]+X[i])
     return vector(result)
@@ -16,7 +16,7 @@ class vector(tuple):
   def __sub__(self,X):
     if len(self) != len(X):
       raise TypeError ('Dimension mismatch')
-    result=[]
+    result = []
     for i in range(len(self)):
       result.append(self[i]-X[i])
     return vector(result)
@@ -27,9 +27,9 @@ class vector(tuple):
   def __mul__(self,X):
     if len(self) != len(X):
       raise TypeError ('Dimension mismatch')
-    result=0
+    result = 0
     for i in range(len(self)):
-      result+=self[i]*X[i]
+      result += self[i]*X[i]
     return result
 
   def __imul__(self,X):

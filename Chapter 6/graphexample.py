@@ -1,8 +1,9 @@
-import Graph
+import graph
 
-nodenumbers = {'John':0, 'Sally':1, 'George':2, 'Phil':3, 'Rose':4, 'Alice':5}
+nodenumbers = {'John':0, 'Sally':1, 'George':2,
+               'Phil':3, 'Rose':4, 'Alice':5}
 
-G=Graph.Graph(len(nodenumbers))
+G=graph.Graph(len(nodenumbers))
 for node in nodenumbers:
   G.set_node_data(nodenumbers[node],node)
 

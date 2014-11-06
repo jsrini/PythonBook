@@ -1,19 +1,17 @@
-class GhostBase:
+class GhostBase(object):
     
     def __init__(self,color,x,y):
         self._color = color
         self._x = x
         self._y = y
 	
-
-    def changeColor(self,color):
+    def change_color(self,color):
         self._color = color
 
-    def printPosition(self):
+    def print_position(self):
         print("x: " + str(self._x) + " y: " + str(self._y)) 
 
 
-    
 class GhostA(GhostBase):
 
     def __init__(self,color,x,y):
@@ -22,7 +20,7 @@ class GhostA(GhostBase):
         self._x = x
         self._y = y
     
-    def moveUp(self):
+    def move_up(self):
         self._y += 2
         
 class GhostB(GhostBase):
@@ -33,5 +31,5 @@ class GhostB(GhostBase):
         self._x = 2
         self._y = 2
         
-    def moveUp(self):
+    def move_up(self):
         self._y += 5

@@ -1,20 +1,21 @@
-import WeightedGraph
+import weightedgraph
 import kruskal
 
-nodenumbers = {'John':0, 'Sally':1, 'George':2, 'Phil':3, 'Rose':4, 'Alice':5}
+nodenumbers = {'John':0, 'Sally':1, 'George':2,
+               'Phil':3, 'Rose':4, 'Alice':5}
 
-G=WeightedGraph.Graph(len(nodenumbers))
+G = weightedgraph.Graph(len(nodenumbers))
 for node in nodenumbers:
-  G.setvertex(nodenumbers[node],node)
+  G.set_vertex(nodenumbers[node],node)
 
-G.addedge(nodenumbers['John'],nodenumbers['Sally'],1)
-G.addedge(nodenumbers['John'],nodenumbers['George'],2)
-G.addedge(nodenumbers['John'],nodenumbers['Rose'],3)
-G.addedge(nodenumbers['George'],nodenumbers['Sally'],4)
-G.addedge(nodenumbers['Phil'],nodenumbers['Sally'],5)
-G.addedge(nodenumbers['Rose'],nodenumbers['Alice'],6)
+G.add_edge(nodenumbers['John'],nodenumbers['Sally'],1)
+G.add_edge(nodenumbers['John'],nodenumbers['George'],2)
+G.add_edge(nodenumbers['John'],nodenumbers['Rose'],3)
+G.add_edge(nodenumbers['George'],nodenumbers['Sally'],4)
+G.add_edge(nodenumbers['Phil'],nodenumbers['Sally'],5)
+G.add_edge(nodenumbers['Rose'],nodenumbers['Alice'],6)
 
-G.printGraph()
+G.print_graph()
 
 #print('Depth First Traversal:')
 #G.DepthFirstTraverse()
@@ -24,9 +25,9 @@ G.printGraph()
 #G.DepthFirstTraverse2()
 
 print('Breadth First Traversal:')
-G.BreadthFirstTraverse()
+G.breadth_first_traverse()
 #E=G.sortEdges()
 #print(E)
 
 MST=kruskal.Kruskal(G)
-MST.printGraph()
+MST.print_graph()
