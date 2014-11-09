@@ -25,8 +25,7 @@ class Node(object):
         return (self.lchild == None) and
                (self.rchild == None)
 
-class BinarySearchTree(object)
-:
+class BinarySearchTree(object):
     def __init__(self):
         self.root = None
 

@@ -20,6 +20,7 @@ class Element:
 class LinkedList:
     def __init__(self,element=None):
         self.head = element
+    
     def insert_tail_element(self,data):
         current = self.head
         if current == None:

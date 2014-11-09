@@ -10,7 +10,7 @@ def find_root(S,n):
     root = n
     while S[root] > 0:
         root = S[root]
-    #print('root: '+str(root)+' S['+str(root)+']: '+str(S[root]))
+
     if(S[n]>0):
         S[n] = root
     return root
@@ -36,7 +36,7 @@ def kruskal(G):
         u, v, w = E[i]
         rootu = find_root(set_roots,u)
         rootv = find_root(set_roots,v)
-        #print('root[u:'+str(u)+']: '+str(rootu)+' root[v:'+str(v)+']: '+str(rootv))
+
         if rootu != rootv:
             union(set_roots,rootu,rootv)
             print('Adding edge: ' + str((u,v,w)))

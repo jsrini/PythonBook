@@ -293,9 +293,3 @@ def merge(left_hull,right_hull):
     print('merge.  constructed convex hull.  '+
           str(convex_hull))
     return convex_hull
-        
-        
-        
-    
-    
-    
