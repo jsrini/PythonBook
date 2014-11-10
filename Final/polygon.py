@@ -24,8 +24,7 @@ class Polygon(object):
                       '] is to the left of '+
                       str(a))
                 continue
-            if (p[1] < y and rp[1] < y) or
-               (p[1] > y and rp[1] > y):
+            if (p[1] < y and rp[1] < y) or (p[1] > y and rp[1] > y):
                 print('Ignoring. edge [' +
                       str(p) +
                       '->' +
@@ -37,8 +36,7 @@ class Polygon(object):
                 if p[0] < x:
                     #ignore, vertex is to the left
                     continue
-                if (lp[1] > p[1] and rp[1] > p[1]) or
-                   (lp[1] < p[1] and rp[1] < p[1]):
+                if (lp[1] > p[1] and rp[1] > p[1]) or (lp[1] < p[1] and rp[1] < p[1]):
                     print('Ignoring. vertex '+
                           str(p) +
                           ' neighbors are on same side ')
@@ -54,4 +52,4 @@ class Polygon(object):
                   str(p)+'->'+str(rp)+']')
             nedges += 1
 
-            return nedges % 2 == 1
+        return nedges % 2 == 1

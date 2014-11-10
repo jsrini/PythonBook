@@ -9,7 +9,7 @@ class Line:
             self.m=float('inf')
             self.X = a[0]
 
-    def is_in_line(a):
+    def is_in_line(self,a):
         if self.m != float('inf'):
             return a[1] == self.m * a[0] + self.C
         else:
